@@ -117,9 +117,9 @@ def render(tag_grouped_dfs):
 
         col1, col2 = st.columns([1, 2])
         with col1:
-            df_pos = pd.DataFrame(positioning_data).sort_values(by=["성능", "디자인", "가격"], ascending=False)
+            df_pos = pd.DataFrame(positioning_data).round(2).sort_values(by=["성능", "디자인", "가격"], ascending=False)
             st.subheader("브랜드별 기준 비율 순위표")
-            st.dataframe(df_pos.set_index("브랜드").style.highlight_max(axis=0, color="lightgreen"))
+            st.dataframe(df_pos.set_index("브랜드").style.highlight_max(axis=0, color="lightgreen").format({"성능": "{:.2f}", "디자인": "{:.2f}", "가격": "{:.2f}"}))
 
         with col2:
             st.subheader("3D 포지셔닝 맵")

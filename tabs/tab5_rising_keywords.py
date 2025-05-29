@@ -44,11 +44,11 @@ def get_related_reviews(keyword, tag_grouped_dfs, max_examples=5):
     return results[:max_examples]
 
 # 간단한 이벤트 설명 매핑 (예시)
-event_map = {
-    "아스몬": "신제품 출시 및 유튜브 리뷰 확산 (2025.03)",
-    "하카전자담배": "편의점 입점 확대 및 SNS 바이럴 (2025.02)",
-    "빌리아": "기획 할인 이벤트로 검색량 증가 (2025.01)"
-}
+# event_map = {
+#     "아스몬": "신제품 출시 및 유튜브 리뷰 확산 (2025.03)",
+#     "하카전자담배": "편의점 입점 확대 및 SNS 바이럴 (2025.02)",
+#     "빌리아": "기획 할인 이벤트로 검색량 증가 (2025.01)"
+# }
 
 # Prophet 예측 함수
 def get_forecast(keyword):

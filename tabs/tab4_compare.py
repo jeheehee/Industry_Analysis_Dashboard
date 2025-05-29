@@ -73,7 +73,7 @@ def render(tag_grouped_dfs):
             return
         try:
             wc = WordCloud(
-                font_path='C:/Windows/Fonts/malgun.ttf', 
+                font_path='assets/NanumGothic.ttf', 
                 background_color='white', 
                 width=600, 
                 height=400
