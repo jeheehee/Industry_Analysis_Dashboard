@@ -1,10 +1,17 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+import matplotlib.font_manager as fm
 from utils.data_loader import load_data
 from tabs import (
     tab1_emotion, tab2_emotion2, tab3_brand_keyword,
     tab4_compare, tab6_absa, tab7_score
 )
+
+font_path = 'assets/NanumGothic.ttf'
+font_prop = fm.FontProperties(fname=font_path)
+
+plt.rcParams['axes.unicode_minus'] = False
 
 st.title("리뷰 분석 대시보드")
 # 데이터 로딩

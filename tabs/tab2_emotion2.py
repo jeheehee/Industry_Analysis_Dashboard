@@ -9,6 +9,16 @@ from collections import Counter
 from soynlp.word import WordExtractor
 from soynlp.tokenizer import LTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
+# 폰트 경로 확인
+font_path = "assets/NanumGothic.ttf"  # 업로드한 폰트 경로
+if not os.path.exists(font_path):
+    st.error("❌ 폰트 파일을 찾을 수 없습니다.")
+else:
+    font_prop = fm.FontProperties(fname=font_path)
 
 POS_TARGETS = ['좋', '만족', '훌륭', '깔끔', '편하', '빠르', '예쁘', '감동', '신나', '행복', '사랑', '유용', '기분좋', '재밌', '즐겁', '고급', '세련', '친절', '정확', '튼튼']
 NEG_TARGETS = ['별로', '불편', '고장', '느리', '느림', '실망', '짜증', '화남', '불만', '아쉬', '부족', '망함', '불쾌', '지루', '불친절', '복잡', '헷갈림', '약함', '무거움', '불량']
@@ -72,12 +82,16 @@ def render(tag_grouped_dfs):
     sns.lineplot(data=monthly_summary, x='월', y='리뷰 수', ax=axes[0], marker='o')
     axes[0].set_xticks(ticks)
     axes[0].tick_params(axis='x', rotation=45)
-    axes[0].set_title('월별 리뷰 수')
+    axes[0].set_title('월별 리뷰 수', fontproperties=font_prop)
+    axes[0].set_xlabel('월', fontproperties=font_prop)
+    axes[0].set_ylabel('리뷰 수', fontproperties=font_prop)
 
     sns.lineplot(data=monthly_summary, x='월', y='별점', ax=axes[1], marker='o', color='orange')
     axes[1].set_xticks(ticks)
     axes[1].tick_params(axis='x', rotation=45)
-    axes[1].set_title('월별 평균 별점')
+    axes[1].set_title('월별 평균 별점', fontproperties=font_prop)
+    axes[1].set_xlabel('월', fontproperties=font_prop)
+    axes[1].set_ylabel('별점', fontproperties=font_prop)
     st.pyplot(fig)
 
 

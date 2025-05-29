@@ -6,6 +6,16 @@ from wordcloud import WordCloud
 from collections import Counter
 import re
 from utils.text_cleaner import extract_context
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
+# 폰트 경로 확인
+font_path = "assets/NanumGothic.ttf"  # 업로드한 폰트 경로
+if not os.path.exists(font_path):
+    st.error("❌ 폰트 파일을 찾을 수 없습니다.")
+else:
+    font_prop = fm.FontProperties(fname=font_path)
 
 TARGETS = ['좋', '만족', '훌륭', '깔끔', '편하', '빠르', '예쁘', '감동', '신나', '행복', '사랑', '유용', '기분좋', '재밌', '즐겁', '고급', '세련', '친절', '정확', '튼튼',
            '별로', '불편', '고장', '느리', '느림', '실망', '짜증', '화남', '불만', '아쉬', '부족', '망함', '불쾌', '지루', '불친절', '복잡', '헷갈림', '약함', '무거움', '불량']
@@ -91,9 +101,9 @@ def render(tag_grouped_dfs):
         try:
             fig, ax = plt.subplots(figsize=(8, 6))
             sns.countplot(x='별점', data=df, ax=ax, palette='coolwarm')
-            ax.set_title(title, fontsize=14, pad=20)
-            ax.set_xlabel('별점')
-            ax.set_ylabel('리뷰 수')
+            ax.set_title(title, fontsize=14, pad=20, fontproperties=font_prop)
+            ax.set_xlabel('별점', fontproperties=font_prop)
+            ax.set_ylabel('리뷰 수', fontproperties=font_prop)
             st.pyplot(fig)
             plt.close(fig)
         except Exception as e:
