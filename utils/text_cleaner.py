@@ -1,6 +1,6 @@
 import streamlit as st
 import re
-from konlpy.tag import Okt
+from soynlp.tokenizer import RegexTokenizer
 from collections import Counter
 
 STOPWORDS = set([
@@ -55,14 +55,20 @@ def extract_context(texts, targets, stopwords=STOPWORDS):
 
 # 단어 정규화 및 가중치 빈도 분석
 @st.cache_data
-def normalize_texts(texts):
+def normalize_texts(texts, stopwords=None, synonym_map=None):
+    if stopwords is None:
+        stopwords = set()
+    if synonym_map is None:
+        synonym_map = {}
+
+    tokenizer = RegexTokenizer()
     result = []
-    okt = Okt()
+
     for text in texts:
-        tokens = okt.pos(text, stem=True)
+        tokens = tokenizer.tokenize(text)
         words = []
-        for word, pos in tokens:
-            if pos in ['Noun', 'Adjective', 'Verb'] and word not in STOPWORDS:
+        for word in tokens:
+            if word not in stopwords:
                 word = synonym_map.get(word, word)
                 words.append(word)
         result.append(' '.join(words))

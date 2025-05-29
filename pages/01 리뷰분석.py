@@ -6,13 +6,7 @@ from tabs import (
     tab4_compare, tab6_absa, tab7_score
 )
 
-st.set_page_config(layout="wide")
-st.title("리뷰분석 대시보드")
-
-# 폰트 설정
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
-
+st.title("리뷰 분석 대시보드")
 # 데이터 로딩
 category_grouped_dfs, tag_grouped_dfs = load_data()
 

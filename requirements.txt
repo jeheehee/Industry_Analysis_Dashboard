@@ -11,3 +11,4 @@ openpyxl==3.1.5
 plotly==6.0.1
 konlpy==0.6.0
 openai==0.28.0
+soynlp==0.0.493

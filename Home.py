@@ -1,8 +1,13 @@
 # Home.py
 
 import streamlit as st
+import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="리뷰 분석 대시보드", layout="wide")
+st.set_page_config(layout="wide")
+
+# 폰트 설정
+plt.rcParams['font.family'] = 'Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
 
 st.markdown("<h1 style='text-align: center;'>🎯 리뷰 & 검색량 분석 대시보드</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>좌측 사이드바에서 분석 페이지를 선택하세요</h4>", unsafe_allow_html=True)

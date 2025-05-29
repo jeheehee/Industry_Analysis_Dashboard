@@ -6,7 +6,8 @@ from components.wordcloud_plot import generate_wordcloud_image
 from components.treemap_plot import prepare_log_nom_treemap_data, show_treemap
 from utils.text_cleaner import STOPWORDS, extract_context, normalize_texts
 from collections import Counter
-from konlpy.tag import Okt
+from soynlp.word import WordExtractor
+from soynlp.tokenizer import LTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 
 POS_TARGETS = ['좋', '만족', '훌륭', '깔끔', '편하', '빠르', '예쁘', '감동', '신나', '행복', '사랑', '유용', '기분좋', '재밌', '즐겁', '고급', '세련', '친절', '정확', '튼튼']
@@ -40,7 +41,7 @@ def render(tag_grouped_dfs):
         st.warning("⚠️ '리뷰작성일' 컬럼이 누락되었습니다.")
         return
 
-    okt = Okt()
+    # okt = Okt()
     df = df.copy()
     df['리뷰작성일'] = pd.to_datetime(df['리뷰작성일'], format='%Y%m%d', errors='coerce')
     df = df.dropna(subset=['리뷰작성일'])
@@ -96,27 +97,27 @@ def render(tag_grouped_dfs):
     normalized_texts = normalize_texts(texts)
 
     # 2-3그램 추출
-    vectorizer = CountVectorizer(ngram_range=(2, 3), min_df=1)
-    X = vectorizer.fit_transform(normalized_texts)
-    ngram_freq = pd.Series(X.toarray().sum(axis=0), index=vectorizer.get_feature_names_out()).sort_values(ascending=False)
+    # vectorizer = CountVectorizer(ngram_range=(2, 3), min_df=1)
+    # X = vectorizer.fit_transform(normalized_texts)
+    # ngram_freq = pd.Series(X.toarray().sum(axis=0), index=vectorizer.get_feature_names_out()).sort_values(ascending=False)
 
-    if not ngram_freq.empty:
-        max_freq = ngram_freq.max()
-        colors = ['orange' if v == max_freq else 'skyblue' for v in ngram_freq.values[:30]]
+    # if not ngram_freq.empty:
+    #     max_freq = ngram_freq.max()
+    #     colors = ['orange' if v == max_freq else 'skyblue' for v in ngram_freq.values[:30]]
 
-        # 시각화
-        fig, ax = plt.subplots(figsize=(12, 8))
-        sns.barplot(x=ngram_freq.values[:30], y=ngram_freq.index[:30], palette=colors, ax=ax)
-        ax.set_title('2-3그램 빈도 분석 (정규화 및 전처리 적용)', fontsize=16)
-        ax.set_xlabel('빈도', fontsize=12)
-        ax.set_ylabel('2-3그램 단어', fontsize=12)
-        st.pyplot(fig)
+    #     # 시각화
+    #     fig, ax = plt.subplots(figsize=(12, 8))
+    #     sns.barplot(x=ngram_freq.values[:30], y=ngram_freq.index[:30], palette=colors, ax=ax)
+    #     ax.set_title('2-3그램 빈도 분석 (정규화 및 전처리 적용)', fontsize=16)
+    #     ax.set_xlabel('빈도', fontsize=12)
+    #     ax.set_ylabel('2-3그램 단어', fontsize=12)
+    #     st.pyplot(fig)
 
-        # # 테이블로도 출력
-        # st.subheader("📋 상위 2-3그램 빈도표")
-        # st.dataframe(ngram_freq.head(30).reset_index().rename(columns={"index": "2-3그램", 0: "빈도"}))
-    else:
-        st.warning("⚠️ 의미 있는 2-3그램 패턴이 없습니다. 리뷰 수를 늘리거나 문장을 더 정규화하세요.")
+    #     # # 테이블로도 출력
+    #     # st.subheader("📋 상위 2-3그램 빈도표")
+    #     # st.dataframe(ngram_freq.head(30).reset_index().rename(columns={"index": "2-3그램", 0: "빈도"}))
+    # else:
+    #     st.warning("⚠️ 의미 있는 2-3그램 패턴이 없습니다. 리뷰 수를 늘리거나 문장을 더 정규화하세요.")
 
 
 
