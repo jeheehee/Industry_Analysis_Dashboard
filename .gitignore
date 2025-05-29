@@ -1,0 +1,41 @@
+# 파일
+search_data/realtime_search_amont.py
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# 환경 설정
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# IDE & 에디터 관련
+.vscode/
+.idea/
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Streamlit secrets (중요!)
+.streamlit/secrets.toml
+
+# CSV, 로그, 분석 결과 파일
+*.xls
+*.log
+
+# OS 별
+Thumbs.db
+ehthumbs.db
