@@ -18,11 +18,11 @@ extended_keywords = {
     "가격": ["가격", "가성비", "비쌈", "싸다", "저렴", "할인", "구성비", "값", "지출", "경제적", "비용", "이벤트", "쿠폰", "혜택", "정가", "세일", "지갑", "합리적", "프로모션"]
 }
 
-okt = Okt()
 
 # 분석 함수
 def analyze_sentiment_with_examples(df, rating_range=(1, 5)):
     df = df.copy()
+    okt = Okt()
     df['리뷰 내용'] = df['리뷰 내용'].fillna("").str.lower()
     df['리뷰작성일'] = pd.to_datetime(df['리뷰작성일'], errors='coerce', format="%Y%m%d")
     df = df[(df['별점'] >= rating_range[0]) & (df['별점'] <= rating_range[1])]

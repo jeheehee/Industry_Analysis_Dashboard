@@ -11,7 +11,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 POS_TARGETS = ['좋', '만족', '훌륭', '깔끔', '편하', '빠르', '예쁘', '감동', '신나', '행복', '사랑', '유용', '기분좋', '재밌', '즐겁', '고급', '세련', '친절', '정확', '튼튼']
 NEG_TARGETS = ['별로', '불편', '고장', '느리', '느림', '실망', '짜증', '화남', '불만', '아쉬', '부족', '망함', '불쾌', '지루', '불친절', '복잡', '헷갈림', '약함', '무거움', '불량']
-okt = Okt()
 
 
 def render(tag_grouped_dfs):
@@ -41,6 +40,7 @@ def render(tag_grouped_dfs):
         st.warning("⚠️ '리뷰작성일' 컬럼이 누락되었습니다.")
         return
 
+    okt = Okt()
     df = df.copy()
     df['리뷰작성일'] = pd.to_datetime(df['리뷰작성일'], format='%Y%m%d', errors='coerce')
     df = df.dropna(subset=['리뷰작성일'])
@@ -83,8 +83,6 @@ def render(tag_grouped_dfs):
     # 텍스트 불러오기
     texts = df[df['별점'] <= 3]['리뷰 내용'].dropna().astype(str).tolist()
 
-    # 동의어 사전 매핑
-    # okt = Okt()
     
     # 부정 키워드 및 가중치
     negative_seeds = [

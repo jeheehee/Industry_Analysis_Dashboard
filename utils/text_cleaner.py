@@ -34,7 +34,6 @@ synonym_map = {
     '불량하다': '불량', '불량품': '불량', '불량': '불량'
 }
 
-okt = Okt()
 
 def clean_text(text):
     return re.sub(r'[^가-힣\s]', '', str(text))
@@ -58,6 +57,7 @@ def extract_context(texts, targets, stopwords=STOPWORDS):
 @st.cache_data
 def normalize_texts(texts):
     result = []
+    okt = Okt()
     for text in texts:
         tokens = okt.pos(text, stem=True)
         words = []
