@@ -91,7 +91,7 @@ def render(tag_grouped_dfs):
             fig, ax = plt.subplots(figsize=(8, 6))
             ax.imshow(wc, interpolation='bilinear')
             ax.axis('off')
-            ax.set_title(title, fontsize=14, pad=20)
+            ax.set_title(title, fontsize=14, pad=20, fontproperties=font_prop)
             st.pyplot(fig)
             plt.close(fig)
         except Exception as e:
