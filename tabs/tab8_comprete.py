@@ -120,7 +120,7 @@ def render():
         ax_line.plot(rolling_df.index, rolling_df[brand_x], label=brand_x)
         ax_line.plot(rolling_df.index, rolling_df[brand_y], label=brand_y)
         ax_line.legend()
-        ax_line.set_title(f"검색량 추이 비교: {brand_x} vs {brand_y}")
+        ax_line.set_title(f"검색량 추이 비교: {brand_x} vs {brand_y}", fontproperties=font_prop)
         st.pyplot(fig_line)
 
         if st.checkbox("전체 브랜드 검색량 상관관계 히트맵 보기"):
