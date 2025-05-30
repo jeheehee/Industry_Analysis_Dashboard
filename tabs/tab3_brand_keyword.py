@@ -21,13 +21,13 @@ def render(tag_grouped_dfs):
 
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("**전체 긍정 키워드 TOP 20**")
+        st.markdown("**전체 리뷰 긍정 키워드 TOP 20**")
         if all_pos:
             st.dataframe(pd.DataFrame(all_pos.most_common(20), columns=["단어", "빈도"]))
         else:
             st.info("긍정 키워드가 없습니다.")
     with col2:
-        st.markdown("**전체 부정 키워드 TOP 20**")
+        st.markdown("**전체 리뷰 부정 키워드 TOP 20**")
         if all_neg:
             st.dataframe(pd.DataFrame(all_neg.most_common(20), columns=["단어", "빈도"]))
         else:

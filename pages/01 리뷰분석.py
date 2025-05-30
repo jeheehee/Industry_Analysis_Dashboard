@@ -22,11 +22,11 @@ tab_choice = st.radio(
     "분석 항목을 선택하세요",
     options=[
         "제품 유형별 리뷰분석",
-        "제품 종류별 리뷰분석",
-        "상위 리뷰 키워드 비교",
+        "브랜드 포지셔닝 맵",
         "경쟁사 분석",
+        "제품(브랜드)별 리뷰분석",
+        "전체 리뷰 상위 키워드 비교",
         # "ABSA",
-        "브랜드 포지셔닝 맵"
     ],
     horizontal=True
 )
@@ -36,17 +36,17 @@ st.markdown("---")
 if "유형" in tab_choice:
     tab1_emotion.render(category_grouped_dfs)
 
+elif "포지셔닝" in tab_choice:
+    tab7_score.render(tag_grouped_dfs)
+    
+elif "경쟁사" in tab_choice:
+    tab4_compare.render(tag_grouped_dfs)
+    
 elif "종류" in tab_choice:
     tab2_emotion2.render(tag_grouped_dfs)
 
 elif "상위 리뷰" in tab_choice:
     tab3_brand_keyword.render(tag_grouped_dfs)
-
-elif "경쟁사" in tab_choice:
-    tab4_compare.render(tag_grouped_dfs)
     
 # elif "ABSA" in tab_choice:
 #     tab6_absa.render(tag_grouped_dfs)
-    
-elif "포지셔닝" in tab_choice:
-    tab7_score.render(tag_grouped_dfs)
