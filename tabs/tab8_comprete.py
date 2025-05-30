@@ -27,7 +27,6 @@ mpl.rcParams['font.family'] = font_name
 mpl.rcParams['axes.unicode_minus'] = False
 
 
-
 st.set_page_config(page_title="전자담배 시장 경쟁 분석", layout="wide")
 st.title("전자담배 브랜드 경쟁 분석 심화 대시보드")
 
@@ -37,7 +36,7 @@ def render():
     df_raw['ds'] = pd.to_datetime(df_raw['ds'])
     df_melted = df_raw.melt(id_vars=['ds'], var_name='keyword', value_name='search_volume')
 
-    competitor_brands = ['아이코스', '글로전자담배', '릴하이브리드', '차이코스', '발라리안', '빌리아', '아스몬', '엑스퍼', '연초']
+    competitor_brands = ['아이코스', '글로전자담배', '릴하이브리드', '차이코스', '발라리안', '빌리아', '아스몬', '엑스퍼', '연초', '칠렉스', '하카시그니처','하카전자담배', '젤로전자담배']
 
     competitor_df = df_raw.set_index('ds')[competitor_brands].copy()
     rolling_df = competitor_df.rolling(window=3).mean()
@@ -65,7 +64,7 @@ def render():
     for i in range(len(correlation_matrix.columns)):
         for j in range(i+1, len(correlation_matrix.columns)):
             val = correlation_matrix.iloc[i, j]
-            if abs(val) >= 0.4:
+            if abs(val) >= 0.5:
                 sign = '+' if val > 0 else '-'
                 brand1 = correlation_matrix.columns[i]
                 brand2 = correlation_matrix.columns[j]
@@ -105,7 +104,7 @@ def render():
                 date_index.append(window_idx[-1])
 
         if beta_series:
-            st.metric(f"최근 회귀계수 (마지막 윈도우)", f"{beta_series[-1]:.3f}")
+            st.metric(f"최근 3개월간 회귀계수", f"{beta_series[-1]:.3f}")
             st.markdown("β > 1	과열 경쟁, 0.5~1: 강한 경쟁, 0~0.5: 약한경쟁, <0: 보완재(브랜드 공동 성장)")
             fig_beta, ax_beta = plt.subplots(figsize=(10, 4))
             sns.lineplot(x=date_index, y=beta_series, ax=ax_beta)
@@ -116,8 +115,6 @@ def render():
             st.pyplot(fig_beta)
 
 
-
-
         # # 스캐터플롯 추가: 상관계수가 잘 보이도록
         # st.markdown("**검색량 산점도 (상관관계 시각화)**")
         # fig_scatter, ax_scatter = plt.subplots(figsize=(6, 4))
@@ -126,6 +123,7 @@ def render():
         # ax_scatter.set_ylabel(brand_y)
         # ax_scatter.set_title(f"{brand_x} vs {brand_y} 검색량 산점도")
         # st.pyplot(fig_scatter)
+
 
         st.markdown("**검색량 추이 (동일 축 비교)**")
         fig_line, ax_line = plt.subplots(figsize=(10, 4))
