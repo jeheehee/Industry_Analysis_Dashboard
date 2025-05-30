@@ -20,7 +20,7 @@ tab_choice = st.radio(
     "분석 항목을 선택하세요",
     options=[
         "급상승 키워드 분석",
-        "경쟁 브랜드 비교 분석",
+        # "경쟁 브랜드 비교 분석",
     ],
     horizontal=True
 )
@@ -30,6 +30,6 @@ st.markdown("---")
 if "급상승" in tab_choice:
     tab5_rising_keywords.render(tag_grouped_dfs)
     
-if "경쟁" in tab_choice:
-    tab8_comprete.render()
+# elif "경쟁" in tab_choice:
+#     tab8_comprete.render()
 
