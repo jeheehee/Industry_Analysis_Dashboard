@@ -10,25 +10,23 @@ from sklearn.linear_model import LinearRegression
 from matplotlib.colors import LinearSegmentedColormap
 import os
 
-# 한글 폰트 경로
+# 폰트 경로 확인
+font_path = "assets/NanumGothic.ttf"  # 업로드한 폰트 경로
+if not os.path.exists(font_path):
+    st.error("❌ 폰트 파일을 찾을 수 없습니다.")
+else:
+    font_prop = fm.FontProperties(fname=font_path)
+    
+# 정확한 폰트 경로
 font_path = 'assets/NanumGothic.ttf'
+fm.fontManager.addfont(font_path)
+font_name = fm.FontProperties(fname=font_path).get_name()
 
-# 폰트 로딩
-font_prop = fm.FontProperties(fname=font_path)
-mpl.rcParams['font.family'] = font_prop.get_name()
-mpl.rcParams['axes.unicode_minus'] = False  # 마이너스 깨짐 방지
+# rcParams에 정확한 폰트 이름으로 등록
+mpl.rcParams['font.family'] = font_name
+mpl.rcParams['axes.unicode_minus'] = False
 
-# 폰트 자동 로드 함수
-def load_custom_font():
-    font_path = "./fonts/NanumGothic.ttf"
-    if os.path.exists(font_path):
-        font_prop = fm.FontProperties(fname=font_path)
-        mpl.rcParams['font.family'] = font_prop.get_name()
-    else:
-        print("⚠️ NanumGothic 폰트 파일을 찾을 수 없습니다.")
-    mpl.rcParams['axes.unicode_minus'] = False
 
-load_custom_font()
 
 st.set_page_config(page_title="전자담배 시장 경쟁 분석", layout="wide")
 st.title("전자담배 브랜드 경쟁 분석 심화 대시보드")
