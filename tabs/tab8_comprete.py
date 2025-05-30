@@ -119,7 +119,7 @@ def render():
         fig_line, ax_line = plt.subplots(figsize=(10, 4))
         ax_line.plot(rolling_df.index, rolling_df[brand_x], label=brand_x)
         ax_line.plot(rolling_df.index, rolling_df[brand_y], label=brand_y)
-        ax_line.legend()
+        ax_line.legend(fontproperties=font_prop)
         ax_line.set_title(f"검색량 추이 비교: {brand_x} vs {brand_y}", fontproperties=font_prop)
         st.pyplot(fig_line)
 
