@@ -42,10 +42,10 @@ elif "포지셔닝" in tab_choice:
 elif "경쟁사" in tab_choice:
     tab4_compare.render(tag_grouped_dfs)
     
-elif "종류" in tab_choice:
+elif "제품(브랜드)" in tab_choice:
     tab2_emotion2.render(tag_grouped_dfs)
 
-elif "상위 리뷰" in tab_choice:
+elif "전체 리뷰" in tab_choice:
     tab3_brand_keyword.render(tag_grouped_dfs)
     
 # elif "ABSA" in tab_choice:

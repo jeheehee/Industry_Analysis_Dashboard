@@ -67,8 +67,8 @@ def show_treemap(df_plot, value_col, title):
     fig.update_traces(
         texttemplate="%{label}",
         textposition="middle center",
-        hovertemplate=f"<span style='font-size:22px'>%{{customdata[0]}}</span><extra></extra>",
-        textfont=dict(size=20)
+        hovertemplate=f"<span style='font-size:22px'>%{{customdata[0]:,.3f}}</span><extra></extra>",
+        textfont=dict(size=20),
     )
 
     st.plotly_chart(fig, use_container_width=True)

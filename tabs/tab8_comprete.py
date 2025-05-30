@@ -2,9 +2,19 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from matplotlib.colors import LinearSegmentedColormap
+import os
+
+# 폰트 경로 확인
+font_path = "assets/NanumGothic.ttf"  # 업로드한 폰트 경로
+if not os.path.exists(font_path):
+    st.error("❌ 폰트 파일을 찾을 수 없습니다.")
+else:
+    font_prop = fm.FontProperties(fname=font_path)
 
 st.set_page_config(page_title="전자담배 시장 경쟁 분석", layout="wide")
 st.title("전자담배 브랜드 경쟁 분석 심화 대시보드")
@@ -31,9 +41,9 @@ def render():
     hhi_series = calculate_hhi(competitor_df)
     fig_hhi, ax_hhi = plt.subplots(figsize=(10, 4))
     sns.lineplot(x=hhi_series.index, y=hhi_series.values, ax=ax_hhi)
-    ax_hhi.set_title("전자담배 시장 집중도 추이 (HHI)")
-    ax_hhi.set_xlabel("월")
-    ax_hhi.set_ylabel("HHI 지수")
+    ax_hhi.set_title("전자담배 시장 집중도 추이 (HHI)", fontproperties=font_prop)
+    ax_hhi.set_xlabel("월", fontproperties=font_prop)
+    ax_hhi.set_ylabel("HHI 지수", fontproperties=font_prop)
     ax_hhi.grid(True)
     st.pyplot(fig_hhi)
     st.markdown('---')
@@ -51,7 +61,7 @@ def render():
     high_corr_pairs.sort(key=lambda x: abs(x[2]), reverse=True)
 
     top_corr_df = pd.DataFrame(high_corr_pairs, columns=['브랜드1','브랜드2','상관계수','부호'])
-    st.dataframe(top_corr_df[['브랜드1','브랜드2','상관계수']].style.background_gradient(cmap='coolwarm', subset=['상관계수']))
+    st.dataframe(top_corr_df[['브랜드1','브랜드2','상관계수']].style.background_gradient(cmap='coolwarm', subset=['상관계수']).format({"상관계수": "{:.2f}"}))
 
     pair_options = [f"{b1} vs {b2} ({s} r={r:.2f})" for b1, b2, r, s in high_corr_pairs]
     pair_select = st.selectbox("비교할 브랜드 쌍 선택", pair_options)
@@ -87,9 +97,9 @@ def render():
             st.markdown("β > 1	과열 경쟁, 0.5~1: 강한 경쟁, 0~0.5: 약한경쟁, <0: 보완재(브랜드 공동 성장)")
             fig_beta, ax_beta = plt.subplots(figsize=(10, 4))
             sns.lineplot(x=date_index, y=beta_series, ax=ax_beta)
-            ax_beta.set_title(f"회귀계수 시계열 추이: {brand_x} ~ {brand_y}")
-            ax_beta.set_xlabel("기준 월")
-            ax_beta.set_ylabel("경쟁 탄력성 (β)")
+            ax_beta.set_title(f"회귀계수 시계열 추이: {brand_x} ~ {brand_y}", fontproperties=font_prop)
+            ax_beta.set_xlabel("기준 월", fontproperties=font_prop)
+            ax_beta.set_ylabel("경쟁 탄력성 (β)", fontproperties=font_prop)
             ax_beta.grid(True)
             st.pyplot(fig_beta)
 
@@ -118,7 +128,7 @@ def render():
             cmap = LinearSegmentedColormap.from_list("custom_cmap", custom_colors)
             fig_corr, ax = plt.subplots(figsize=(6, 4))
             sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap=cmap, vmin=-1, vmax=1, ax=ax)
-            ax.set_title("브랜드 간 검색량 상관관계 히트맵")
+            ax.set_title("브랜드 간 검색량 상관관계 히트맵", fontproperties=font_prop)
             st.pyplot(fig_corr)
         st.markdown('---')
 
