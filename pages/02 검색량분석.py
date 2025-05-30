@@ -1,13 +1,15 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.font_manager as fm
 from utils.data_loader import load_data
 from tabs import (
     tab5_rising_keywords,
     tab8_comprete,
 )
 
-mpl.rc('font', family='Malgun Gothic')
+font_path = 'assets/NanumGothic.ttf'
+font_prop = fm.FontProperties(fname=font_path)
 
 st.title("검색량 분석 대시보드")
 # 데이터 로딩
