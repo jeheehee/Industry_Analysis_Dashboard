@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from matplotlib.colors import LinearSegmentedColormap
@@ -15,6 +16,8 @@ if not os.path.exists(font_path):
     st.error("❌ 폰트 파일을 찾을 수 없습니다.")
 else:
     font_prop = fm.FontProperties(fname=font_path)
+    
+mpl.rcParams['axes.unicode_minus'] = False
 
 st.set_page_config(page_title="전자담배 시장 경쟁 분석", layout="wide")
 st.title("전자담배 브랜드 경쟁 분석 심화 대시보드")
@@ -119,7 +122,7 @@ def render():
         fig_line, ax_line = plt.subplots(figsize=(10, 4))
         ax_line.plot(rolling_df.index, rolling_df[brand_x], label=brand_x)
         ax_line.plot(rolling_df.index, rolling_df[brand_y], label=brand_y)
-        ax_line.legend(fontproperties=font_prop)
+        ax_line.legend(title_fontproperties=font_prop)
         ax_line.set_title(f"검색량 추이 비교: {brand_x} vs {brand_y}", fontproperties=font_prop)
         st.pyplot(fig_line)
 
