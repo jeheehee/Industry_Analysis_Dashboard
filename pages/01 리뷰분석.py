@@ -2,16 +2,29 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.font_manager as fm
+import os
 from utils.data_loader import load_data
 from tabs import (
     tab1_emotion, tab2_emotion2, tab3_brand_keyword,
     tab4_compare, tab6_absa, tab7_score
 )
 
+# 폰트 경로 확인
+font_path = "assets/NanumGothic.ttf"  # 업로드한 폰트 경로
+if not os.path.exists(font_path):
+    st.error("❌ 폰트 파일을 찾을 수 없습니다.")
+else:
+    font_prop = fm.FontProperties(fname=font_path)
+    
+# 정확한 폰트 경로
 font_path = 'assets/NanumGothic.ttf'
-font_prop = fm.FontProperties(fname=font_path)
+fm.fontManager.addfont(font_path)
+font_name = fm.FontProperties(fname=font_path).get_name()
 
-plt.rcParams['axes.unicode_minus'] = False
+# rcParams에 정확한 폰트 이름으로 등록
+mpl.rcParams['font.family'] = font_name
+mpl.rcParams['axes.unicode_minus'] = False
+
 
 st.title("리뷰 분석 대시보드")
 # 데이터 로딩

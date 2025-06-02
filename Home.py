@@ -10,17 +10,6 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import matplotlib as mpl
 
-# # 정확한 폰트 경로
-# font_path = 'assets/NanumGothic.ttf'
-# fm.fontManager.addfont(font_path)
-# font_name = fm.FontProperties(fname=font_path).get_name()
-
-# # rcParams에 정확한 폰트 이름으로 등록
-# mpl.rcParams['font.family'] = font_name
-# mpl.rcParams['axes.unicode_minus'] = False
-
-# # 확인
-# print(f"✅ 한글 폰트 적용 완료: {font_name}")
 
 st.set_page_config(layout="wide")
 
