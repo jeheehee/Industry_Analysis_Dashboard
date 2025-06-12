@@ -6,6 +6,7 @@ import seaborn as sns
 from components.wordcloud_plot import generate_wordcloud_image
 from components.treemap_plot import prepare_log_nom_treemap_data, show_treemap
 from utils.text_cleaner import STOPWORDS, extract_context
+from utils.summary import calculate_summary, show_summary_box
 from collections import Counter
 import os
 
@@ -37,6 +38,7 @@ def render(category_grouped_dfs):
         st.warning("⚠️ 유효한 제품을 선택해주세요.")
         return
 
+    # len_df = len(category_grouped_dfs)
     df = category_grouped_dfs[selected]
     if df is None or df.empty:
         st.warning("⚠️ 해당 제품의 리뷰 데이터가 없습니다.")
@@ -47,11 +49,19 @@ def render(category_grouped_dfs):
         return
 
     df = df.copy()
+    
     df['리뷰작성일'] = pd.to_datetime(df['리뷰작성일'], format='%Y%m%d', errors='coerce')
     df = df.dropna(subset=['리뷰작성일'])
     df['월'] = df['리뷰작성일'].dt.to_period('M')
 
     months = sorted(df['월'].unique())
+    
+    if df is None or df.empty:
+        st.warning("⚠️ 해당 제품의 리뷰 데이터가 없습니다.")
+        return
+    summary = calculate_summary(df)
+    show_summary_box(summary)
+    
     if len(months) >= 2:
         date_range = [p.to_timestamp() for p in months]
         start_date = date_range[0].date()
@@ -91,6 +101,33 @@ def render(category_grouped_dfs):
     pos = extract_context(df['리뷰 내용'], POS_TARGETS)
     neg = extract_context(df['리뷰 내용'], NEG_TARGETS)
 
+    #========================================
+    # ✅ 요약용 키워드 추출
+    top_pos = pos.most_common(1)[0] if pos else ("-", 0)
+    top_neg = neg.most_common(1)[0] if neg else ("-", 0)
+
+    # print(df.columns)
+    # dominant_ratio = df.shape[0] / len_df
+
+    # ✅ 요약 문장 만들기
+    summary = (
+        f"<b>{selected}</b>: "
+        f"현재 가장 많이 언급된 "
+        f"긍정 키워드는 <b>“{top_pos[0]}”</b> ({top_pos[1]}회), "
+        f"부정 키워드는 <b>“{top_neg[0]}”</b> ({top_neg[1]}회)입니다."
+    )
+
+    # ✅ 콜아웃 형태로 출력
+    st.markdown(
+        f"""
+        <div style="background-color:#f9f9f9; padding: 1.2em; border-left: 5px solid #4CAF50; border-radius: 6px; font-size: 1rem;">
+        📌 요약: {summary}
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+    #----------------------------------------
+    
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("긍정 키워드 TOP 20")
